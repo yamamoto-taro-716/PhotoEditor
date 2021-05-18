@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:photo_editor_pro/utils/Constants.dart';
 
 class BottomBarItemWidget extends StatelessWidget {
   final Color color;
@@ -11,23 +12,26 @@ class BottomBarItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: context.width() / 6,
-      height: 60,
-      decoration: BoxDecoration(border: Border.all(color: viewLineColor), color: color),
-      alignment: Alignment.center,
-      child: Material(
-        color: Colors.white24,
-        child: InkWell(
-          onTap: onTap,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          width: context.width() / 3,
+          height: 60,
+          decoration: BoxDecoration(
+              border: Border.all(color: viewLineColor), color: color),
+          alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Icon(icons, color: Colors.black),
+              Icon(icons, color: Green),
               4.height,
-              Text(title.validate(), style: boldTextStyle(color: Colors.black, size: 13)).fit(),
+              Text(title.validate(),
+                      style: boldTextStyle(color: Green, size: 13))
+                  .fit(),
             ],
           ),
         ),

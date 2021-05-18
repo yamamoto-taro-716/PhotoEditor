@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:photo_editor_pro/components/BlurSelectorBottomSheet.dart';
 import 'package:photo_editor_pro/components/BottomBarItemWidget.dart';
@@ -49,8 +49,8 @@ class PhotoEditScreenState extends State<PhotoEditScreen> {
   DateTime currentBackPressTime;
 
   /// Google Ads
-  RewardedAd rewardedAd;
-  InterstitialAd myInterstitial;
+  // RewardedAd rewardedAd;
+  // InterstitialAd myInterstitial;
   bool mIsImageSaved = false;
 
   /// Used to save edited image on storage
@@ -58,7 +58,8 @@ class PhotoEditScreenState extends State<PhotoEditScreen> {
   final GlobalKey screenshotKey = GlobalKey();
 
   /// Used to draw on image
-  SignatureController signatureController = SignatureController(penStrokeWidth: 5, penColor: Colors.green);
+  SignatureController signatureController =
+      SignatureController(penStrokeWidth: 5, penColor: Colors.green);
   List<Offset> points = [];
 
   /// Texts on image
@@ -71,8 +72,14 @@ class PhotoEditScreenState extends State<PhotoEditScreen> {
   double topWidgetHeight = 80, bottomWidgetHeight = 80, blur = 0;
 
   /// Variables used to show or hide bottom widgets
-  bool mIsPenColorVisible = false, mIsFilterViewVisible = false, mIsBlurVisible = false, mIsFrameVisible = false;
-  bool mIsBrightnessSliderVisible = false, mIsSaturationSliderVisible = false, mIsHueSliderVisible = false, mIsContrastSliderVisible = false;
+  bool mIsPenColorVisible = false,
+      mIsFilterViewVisible = false,
+      mIsBlurVisible = false,
+      mIsFrameVisible = false;
+  bool mIsBrightnessSliderVisible = false,
+      mIsSaturationSliderVisible = false,
+      mIsHueSliderVisible = false,
+      mIsContrastSliderVisible = false;
   bool mIsMoreConfigWidgetVisible = true;
   bool mIsPenEnabled = false;
   bool mShowBeforeImage = false;
@@ -98,7 +105,8 @@ class PhotoEditScreenState extends State<PhotoEditScreen> {
     croppedFile = widget.file;
 
     scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
         mIsMoreConfigWidgetVisible = false;
       } else {
         mIsMoreConfigWidgetVisible = true;
@@ -107,60 +115,60 @@ class PhotoEditScreenState extends State<PhotoEditScreen> {
       setState(() {});
     });
 
-    if (!disableAdMob) {
-      myInterstitial = buildInterstitialAd()..load();
+    // if (!disableAdMob) {
+    //   myInterstitial = buildInterstitialAd()..load();
 
-      rewardedAd = buildRewardedAd()..load();
-    }
+    //   rewardedAd = buildRewardedAd()..load();
+    // }
   }
 
-  RewardedAd buildRewardedAd() {
-    return RewardedAd(
-      request: AdRequest(testDevices: testIds),
-      listener: AdListener(onRewardedAdUserEarnedReward: (i, item) {
-        setValue(IS_FRAME_REWARDED, true);
-        mIsFrameVisible = true;
+  // RewardedAd buildRewardedAd() {
+  //   return RewardedAd(
+  //     request: AdRequest(testDevices: testIds),
+  //     listener: AdListener(onRewardedAdUserEarnedReward: (i, item) {
+  //       setValue(IS_FRAME_REWARDED, true);
+  //       mIsFrameVisible = true;
 
-        setState(() {});
-      }, onAdFailedToLoad: (ad, error) {
-        log(error);
-        rewardedAd.load();
-      }, onAdClosed: (ad) {
-        rewardedAd.load();
-      }, onAdLoaded: (ad) {
-        //
-      }),
-      adUnitId: getRewardedId,
-    );
-  }
+  //       setState(() {});
+  //     }, onAdFailedToLoad: (ad, error) {
+  //       log(error);
+  //       rewardedAd.load();
+  //     }, onAdClosed: (ad) {
+  //       rewardedAd.load();
+  //     }, onAdLoaded: (ad) {
+  //       //
+  //     }),
+  //     adUnitId: getRewardedId,
+  //   );
+  // }
 
-  InterstitialAd buildInterstitialAd() {
-    return InterstitialAd(
-      adUnitId: getInterstitialId,
-      listener: AdListener(onAdLoaded: (ad) {
-        if (mIsImageSaved) {
-          myInterstitial.show();
-        }
-      }, onAdClosed: (ad) {
-        myInterstitial.load();
-      }, onAdOpened: (ad) {
-        myInterstitial.load();
-      }, onAdFailedToLoad: (ad, error) {
-        myInterstitial.load();
-      }),
-      request: AdRequest(testDevices: testIds),
-    );
-  }
+  // InterstitialAd buildInterstitialAd() {
+  //   return InterstitialAd(
+  //     adUnitId: getInterstitialId,
+  //     listener: AdListener(onAdLoaded: (ad) {
+  //       if (mIsImageSaved) {
+  //         myInterstitial.show();
+  //       }
+  //     }, onAdClosed: (ad) {
+  //       myInterstitial.load();
+  //     }, onAdOpened: (ad) {
+  //       myInterstitial.load();
+  //     }, onAdFailedToLoad: (ad, error) {
+  //       myInterstitial.load();
+  //     }),
+  //     request: AdRequest(testDevices: testIds),
+  //   );
+  // }
 
-  Future<void> showInterstitialAd() async {
-    if (myInterstitial != null && await myInterstitial.isLoaded()) {
-      myInterstitial.show().then((value) {
-        myInterstitial?.dispose();
-      });
-    } else {
-      myInterstitial?.load();
-    }
-  }
+  // Future<void> showInterstitialAd() async {
+  //   if (myInterstitial != null && await myInterstitial.isLoaded()) {
+  //     myInterstitial.show().then((value) {
+  //       myInterstitial?.dispose();
+  //     });
+  //   } else {
+  //     myInterstitial?.load();
+  //   }
+  // }
 
   Future<void> capture() async {
     appStore.setLoading(true);
@@ -175,13 +183,15 @@ class PhotoEditScreenState extends State<PhotoEditScreen> {
     mIsContrastSliderVisible = false;
     setState(() {});
 
-    await screenshotController.captureAndSave(await getFileSavePath(), delay: 1.seconds).then((value) async {
-      toast('Saved');
+    await screenshotController
+        .captureAndSave(await getFileSavePath(), delay: 1.seconds)
+        .then((value) async {
+      toast('画像が保存されました');
       log(value);
 
       mIsImageSaved = true;
 
-      showInterstitialAd();
+      // showInterstitialAd();
     }).catchError((e) {
       log(e);
       e.toString().toastString();
@@ -191,7 +201,9 @@ class PhotoEditScreenState extends State<PhotoEditScreen> {
   }
 
   void onEraserClick() {
-    showConfirmDialog(context, 'Do you want to clear?', buttonColor: colorPrimary).then((value) {
+    showConfirmDialog(context, 'Do you want to clear?',
+            buttonColor: colorPrimary)
+        .then((value) {
       if (value ?? false) {
         mIsBlurVisible = false;
         mIsFilterViewVisible = false;
@@ -301,7 +313,8 @@ class PhotoEditScreenState extends State<PhotoEditScreen> {
     appStore.setLoading(true);
     await 300.milliseconds.delay;
 
-    String emoji = await showModalBottomSheet(context: context, builder: (_) => EmojiPickerBottomSheet());
+    String emoji = await showModalBottomSheet(
+        context: context, builder: (_) => EmojiPickerBottomSheet());
 
     if (emoji.validate().isNotEmpty) {
       mStackedWidgetList.add(
@@ -331,7 +344,8 @@ class PhotoEditScreenState extends State<PhotoEditScreen> {
     appStore.setLoading(true);
     await 300.milliseconds.delay;
 
-    String sticker = await showModalBottomSheet(context: context, builder: (_) => StickerPickerBottomSheet());
+    String sticker = await showModalBottomSheet(
+        context: context, builder: (_) => StickerPickerBottomSheet());
 
     if (sticker.validate().isNotEmpty) {
       mStackedWidgetList.add(
@@ -399,11 +413,11 @@ class PhotoEditScreenState extends State<PhotoEditScreen> {
 
       setState(() {});
     } else {
-      if (rewardedAd != null && await rewardedAd.isLoaded()) {
-        rewardedAd.show();
+      // if (rewardedAd != null && await rewardedAd.isLoaded()) {
+      //   rewardedAd.show();
 
-        toast('Showing reward ad');
-      }
+      //   toast('Showing reward ad');
+      // }
     }
   }
 
@@ -465,8 +479,8 @@ class PhotoEditScreenState extends State<PhotoEditScreen> {
 
     signatureController?.dispose();
     scrollController?.dispose();
-    rewardedAd?.dispose();
-    myInterstitial?.dispose();
+    // rewardedAd?.dispose();
+    // myInterstitial?.dispose();
   }
 
   @override
@@ -477,56 +491,64 @@ class PhotoEditScreenState extends State<PhotoEditScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        DateTime now = DateTime.now();
-        if (currentBackPressTime == null || now.difference(currentBackPressTime) > Duration(seconds: 2)) {
-          currentBackPressTime = now;
-          toast('Press back again to exit from the app');
-          return Future.value(false);
-        }
-        return Future.value(true);
-      },
-      child: Scaffold(
-        key: scaffoldKey,
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          height: context.height(),
-          width: context.width(),
-          child: Stack(
-            children: [
-              Column(
+        onWillPop: () async {
+          DateTime now = DateTime.now();
+          if (currentBackPressTime == null ||
+              now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+            currentBackPressTime = now;
+            toast('終了するには、もう一度押してください。');
+            return Future.value(false);
+          }
+          return Future.value(true);
+        },
+        child: SafeArea(
+          child: Scaffold(
+            key: scaffoldKey,
+            resizeToAvoidBottomInset: false,
+            body: Container(
+              height: context.height(),
+              width: context.width(),
+              child: Stack(
                 children: [
-                  Container(
-                    height: topWidgetHeight,
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CloseButton(
-                          onPressed: () {
-                            showConfirmDialog(context, 'You edited image will be lost', buttonColor: colorPrimary).then((value) {
-                              if (value ?? false) {
-                                HomeScreen().launch(context, isNewTask: true);
-                              }
-                            });
-                          },
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                  Column(
+                    children: [
+                      Container(
+                        height: topWidgetHeight,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            IconButton(
-                              icon: Icon(Icons.crop),
+                            CloseButton(
+                              color: Red,
                               onPressed: () {
-                                cropImage(originalFile, onDone: (file) {
-                                  croppedFile = file;
-
-                                  setState(() {});
-                                }).catchError(log);
+                                showConfirmDialog(context, '作業結果が保存されません',
+                                        buttonColor: Blue,
+                                        positiveText: 'はい',
+                                        negativeText: 'いいえ')
+                                    .then((value) {
+                                  if (value ?? false) {
+                                    HomeScreen()
+                                        .launch(context, isNewTask: true);
+                                  }
+                                });
                               },
-                            ).withTooltip(msg: 'Crop'),
-                            /*IconButton(
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.crop, color: Blue),
+                                  onPressed: () {
+                                    cropImage(originalFile, onDone: (file) {
+                                      croppedFile = file;
+
+                                      setState(() {});
+                                    }).catchError(log);
+                                  },
+                                ),
+                                /*IconButton(
                               icon: Icon(Icons.undo_outlined),
                               onPressed: () {
                                 //
@@ -538,350 +560,414 @@ class PhotoEditScreenState extends State<PhotoEditScreen> {
                                 //
                               },
                             ),*/
-                            GestureDetector(
-                              onTapDown: (v) {
-                                mShowBeforeImage = true;
-                                setState(() {});
-                              },
-                              onTapUp: (v) {
-                                mShowBeforeImage = false;
-                                setState(() {});
-                              },
-                              child: Icon(Icons.compare_rounded).paddingAll(8),
+                                GestureDetector(
+                                  onTapDown: (v) {
+                                    mShowBeforeImage = true;
+                                    setState(() {});
+                                  },
+                                  onTapUp: (v) {
+                                    mShowBeforeImage = false;
+                                    setState(() {});
+                                  },
+                                  child:
+                                      Icon(Icons.compare_rounded, color: Blue)
+                                          .paddingAll(8),
+                                ),
+                                16.width,
+                                Text('保存', style: boldTextStyle(color: Blue))
+                                    .paddingSymmetric(
+                                        horizontal: 16, vertical: 8)
+                                    .onTap(() {
+                                  capture();
+                                }, borderRadius: radius()),
+                              ],
                             ),
-                            16.width,
-                            Text('Save', style: boldTextStyle(color: colorPrimary)).paddingSymmetric(horizontal: 16, vertical: 8).onTap(() {
-                              capture();
-                            }, borderRadius: radius()),
                           ],
-                        ),
-                      ],
-                    ).paddingTop(16),
-                  ),
-                  Container(
-                    height: context.height(),
-                    width: context.width(),
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        /// This widget will be saved as edited Image
-                        Screenshot(
-                          controller: screenshotController,
-                          key: screenshotKey,
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              (filter != null && filter.matrix != null)
-                                  ? ColorFiltered(
-                                      colorFilter: ColorFilter.matrix(filter.matrix),
-                                      child: Image.file(croppedFile, fit: BoxFit.fitWidth),
-                                    )
-                                  : ImageFilterWidget(
-                                      brightness: brightness,
-                                      saturation: saturation,
-                                      hue: hue,
-                                      contrast: contrast,
-                                      child: Image.file(croppedFile, fit: BoxFit.fitWidth),
+                        ).paddingTop(16),
+                      ),
+                      Container(
+                        height: context.height(),
+                        width: context.width(),
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            /// This widget will be saved as edited Image
+                            Screenshot(
+                              controller: screenshotController,
+                              key: screenshotKey,
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  (filter != null && filter.matrix != null)
+                                      ? ColorFiltered(
+                                          colorFilter:
+                                              ColorFilter.matrix(filter.matrix),
+                                          child: Image.file(croppedFile,
+                                              fit: BoxFit.fitWidth),
+                                        )
+                                      : ImageFilterWidget(
+                                          brightness: brightness,
+                                          saturation: saturation,
+                                          hue: hue,
+                                          contrast: contrast,
+                                          child: Image.file(croppedFile,
+                                              fit: BoxFit.fitWidth),
+                                        ),
+                                  ClipRRect(
+                                    child: BackdropFilter(
+                                      filter: ImageFilter.blur(
+                                          sigmaX: blur, sigmaY: blur),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        color: Colors.grey.withOpacity(0.1),
+                                      ),
                                     ),
-                              ClipRRect(
-                                child: BackdropFilter(
-                                  filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    color: Colors.grey.withOpacity(0.1),
+                                  ),
+                                  (filter != null && filter.color != null)
+                                      ? Container(
+                                          height: context.height(),
+                                          width: context.width(),
+                                          color: Colors.black12,
+                                          child: SizedBox(),
+                                        ).withShaderMaskGradient(
+                                          LinearGradient(
+                                              colors: filter.color,
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight),
+                                          blendMode: BlendMode.srcOut,
+                                        )
+                                      : SizedBox(),
+                                  frame != null
+                                      ? Container(
+                                          color: Colors.black12,
+                                          child: Image.asset(
+                                            frame,
+                                            fit: BoxFit.fill,
+                                            height: context.height(),
+                                            width: context.width(),
+                                          ),
+                                        )
+                                      : SizedBox(),
+                                  IgnorePointer(
+                                    ignoring: !mIsPenEnabled,
+                                    child: SignatureWidget(
+                                      signatureController: signatureController,
+                                      points: points,
+                                      width: context.width(),
+                                      height: context.height() * 0.8,
+                                    ),
+                                  ),
+                                  StackedWidgetComponent(mStackedWidgetList),
+                                ],
+                              ),
+                            ),
+                            Positioned(
+                              bottom: -10,
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 200),
+                                height: mIsPenColorVisible ? 80 : 0,
+                                color: Colors.white38,
+                                width: context.width(),
+                                child: Row(
+                                  children: [
+                                    Switch(
+                                      value: mIsPenEnabled,
+                                      onChanged: (b) {
+                                        mIsPenEnabled = b;
+                                        mIsPenColorVisible = false;
+
+                                        setState(() {});
+                                      },
+                                    ),
+                                    ColorSelectorBottomSheet(
+                                      list: penColors,
+                                      onColorSelected: (Color color) {
+                                        List<Point> tempPoints =
+                                            signatureController.points;
+                                        signatureController =
+                                            SignatureController(
+                                                penStrokeWidth: 5,
+                                                penColor: color);
+
+                                        tempPoints.forEach((element) {
+                                          signatureController.addPoint(element);
+                                        });
+
+                                        mIsPenColorVisible = false;
+                                        mIsPenEnabled = true;
+
+                                        setState(() {});
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: -10,
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 200),
+                                height: mIsBrightnessSliderVisible ? 120 : 0,
+                                width: context.width(),
+                                child: Container(
+                                  color: Colors.white38,
+                                  height: 60,
+                                  child: Row(
+                                    children: [
+                                      8.width,
+                                      Text('明るさ'),
+                                      8.width,
+                                      Slider(
+                                        min: 0.0,
+                                        max: 1.0,
+                                        activeColor: Green,
+                                        onChanged: (d) {
+                                          brightness = d;
+
+                                          setState(() {});
+                                        },
+                                        value: brightness,
+                                      ).expand(),
+                                    ],
                                   ),
                                 ),
                               ),
-                              (filter != null && filter.color != null)
-                                  ? Container(
-                                      height: context.height(),
-                                      width: context.width(),
-                                      color: Colors.black12,
-                                      child: SizedBox(),
-                                    ).withShaderMaskGradient(
-                                      LinearGradient(colors: filter.color, begin: Alignment.topLeft, end: Alignment.bottomRight),
-                                      blendMode: BlendMode.srcOut,
-                                    )
-                                  : SizedBox(),
-                              frame != null
-                                  ? Container(
-                                      color: Colors.black12,
-                                      child: Image.asset(
-                                        frame,
-                                        fit: BoxFit.fill,
-                                        height: context.height(),
-                                        width: context.width(),
-                                      ),
-                                    )
-                                  : SizedBox(),
-                              IgnorePointer(
-                                ignoring: !mIsPenEnabled,
-                                child: SignatureWidget(
-                                  signatureController: signatureController,
-                                  points: points,
-                                  width: context.width(),
-                                  height: context.height() * 0.8,
+                            ),
+                            Positioned(
+                              bottom: -10,
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 200),
+                                height: mIsContrastSliderVisible ? 120 : 0,
+                                width: context.width(),
+                                child: Container(
+                                  color: Colors.white38,
+                                  height: 60,
+                                  child: Row(
+                                    children: [
+                                      8.width,
+                                      Text('コントラスト'),
+                                      8.width,
+                                      Slider(
+                                        min: 0.0,
+                                        max: 1.0,
+                                        activeColor: Green,
+                                        onChanged: (d) {
+                                          contrast = d;
+
+                                          setState(() {});
+                                        },
+                                        value: contrast,
+                                      ).expand(),
+                                    ],
+                                  ),
                                 ),
                               ),
-                              StackedWidgetComponent(mStackedWidgetList),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                          bottom: -10,
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 200),
-                            height: mIsPenColorVisible ? 80 : 0,
-                            color: Colors.white38,
-                            width: context.width(),
-                            child: Row(
-                              children: [
-                                Switch(
-                                  value: mIsPenEnabled,
-                                  onChanged: (b) {
-                                    mIsPenEnabled = b;
-                                    mIsPenColorVisible = false;
+                            ),
+                            Positioned(
+                              bottom: -10,
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 200),
+                                height: mIsSaturationSliderVisible ? 120 : 0,
+                                width: context.width(),
+                                child: Container(
+                                  color: Colors.white38,
+                                  height: 60,
+                                  child: Row(
+                                    children: [
+                                      8.width,
+                                      Text('彩度'),
+                                      8.width,
+                                      Slider(
+                                        min: 0.0,
+                                        max: 1.0,
+                                        activeColor: Green,
+                                        onChanged: (d) {
+                                          saturation = d;
 
-                                    setState(() {});
-                                  },
+                                          setState(() {});
+                                        },
+                                        value: saturation,
+                                      ).expand(),
+                                    ],
+                                  ),
                                 ),
-                                ColorSelectorBottomSheet(
-                                  list: penColors,
-                                  onColorSelected: (Color color) {
-                                    List<Point> tempPoints = signatureController.points;
-                                    signatureController = SignatureController(penStrokeWidth: 5, penColor: color);
+                              ),
+                            ),
+                            Positioned(
+                              bottom: -10,
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 200),
+                                height: mIsHueSliderVisible ? 120 : 0,
+                                width: context.width(),
+                                child: Container(
+                                  color: Colors.white38,
+                                  height: 60,
+                                  child: Row(
+                                    children: [
+                                      8.width,
+                                      Text('Hue'),
+                                      8.width,
+                                      Slider(
+                                        min: 0.0,
+                                        max: 1.0,
+                                        onChanged: (d) {
+                                          hue = d;
 
-                                    tempPoints.forEach((element) {
-                                      signatureController.addPoint(element);
-                                    });
-
-                                    mIsPenColorVisible = false;
-                                    mIsPenEnabled = true;
-
-                                    setState(() {});
-                                  },
+                                          setState(() {});
+                                        },
+                                        value: hue,
+                                      ).expand(),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: -10,
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 200),
-                            height: mIsBrightnessSliderVisible ? 120 : 0,
-                            width: context.width(),
-                            child: Container(
-                              color: Colors.white38,
-                              height: 60,
-                              child: Row(
-                                children: [
-                                  8.width,
-                                  Text('Brightness'),
-                                  8.width,
-                                  Slider(
-                                    min: 0.0,
-                                    max: 1.0,
-                                    onChanged: (d) {
-                                      brightness = d;
-
-                                      setState(() {});
-                                    },
-                                    value: brightness,
-                                  ).expand(),
-                                ],
                               ),
                             ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: -10,
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 200),
-                            height: mIsContrastSliderVisible ? 120 : 0,
-                            width: context.width(),
-                            child: Container(
-                              color: Colors.white38,
-                              height: 60,
-                              child: Row(
-                                children: [
-                                  8.width,
-                                  Text('Contrast'),
-                                  8.width,
-                                  Slider(
-                                    min: 0.0,
-                                    max: 1.0,
-                                    onChanged: (d) {
-                                      contrast = d;
+                            Positioned(
+                              bottom: 0,
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 200),
+                                height: mIsFilterViewVisible ? 120 : 0,
+                                width: context.width(),
+                                child: FilterSelectionWidget(
+                                    image: croppedFile,
+                                    onSelect: (v) {
+                                      filter = v;
 
                                       setState(() {});
-                                    },
-                                    value: contrast,
-                                  ).expand(),
-                                ],
+                                    }),
                               ),
                             ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: -10,
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 200),
-                            height: mIsSaturationSliderVisible ? 120 : 0,
-                            width: context.width(),
-                            child: Container(
-                              color: Colors.white38,
-                              height: 60,
-                              child: Row(
-                                children: [
-                                  8.width,
-                                  Text('Saturation'),
-                                  8.width,
-                                  Slider(
-                                    min: 0.0,
-                                    max: 1.0,
-                                    onChanged: (d) {
-                                      saturation = d;
-
-                                      setState(() {});
-                                    },
-                                    value: saturation,
-                                  ).expand(),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: -10,
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 200),
-                            height: mIsHueSliderVisible ? 120 : 0,
-                            width: context.width(),
-                            child: Container(
-                              color: Colors.white38,
-                              height: 60,
-                              child: Row(
-                                children: [
-                                  8.width,
-                                  Text('Hue'),
-                                  8.width,
-                                  Slider(
-                                    min: 0.0,
-                                    max: 1.0,
-                                    onChanged: (d) {
-                                      hue = d;
-
-                                      setState(() {});
-                                    },
-                                    value: hue,
-                                  ).expand(),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 200),
-                            height: mIsFilterViewVisible ? 120 : 0,
-                            width: context.width(),
-                            child: FilterSelectionWidget(
-                                image: croppedFile,
-                                onSelect: (v) {
-                                  filter = v;
+                            Positioned(
+                              bottom: 0,
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 200),
+                                height: mIsFrameVisible ? 120 : 0,
+                                width: context.width(),
+                                child: FrameSelectionWidget(onSelect: (v) {
+                                  frame = v;
+                                  if (v.isEmpty) frame = null;
 
                                   setState(() {});
                                 }),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 200),
-                            height: mIsFrameVisible ? 120 : 0,
-                            width: context.width(),
-                            child: FrameSelectionWidget(onSelect: (v) {
-                              frame = v;
-                              if (v.isEmpty) frame = null;
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              child: mIsBlurVisible == true
+                                  ? AnimatedContainer(
+                                      duration: Duration(milliseconds: 200),
+                                      height: mIsBlurVisible ? 120 : 0,
+                                      color: Colors.white38,
+                                      width: context.width(),
+                                      child: BlurSelectorBottomSheet(
+                                        sliderValue: blur,
+                                        onColorSelected: (v) {
+                                          blur = v;
 
-                              setState(() {});
-                            }),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          child: mIsBlurVisible == true
-                              ? AnimatedContainer(
-                                  duration: Duration(milliseconds: 200),
-                                  height: mIsBlurVisible ? 120 : 0,
-                                  color: Colors.white38,
-                                  width: context.width(),
-                                  child: BlurSelectorBottomSheet(
-                                    sliderValue: blur,
-                                    onColorSelected: (v) {
-                                      blur = v;
+                                          setState(() {});
+                                        },
+                                      ),
+                                    )
+                                  : Container(),
+                            ),
 
-                                      setState(() {});
-                                    },
-                                  ),
-                                )
-                              : Container(),
-                        ),
-
-                        /// Show preview of edited image before save
-                        if (mShowBeforeImage) Image.file(croppedFile, fit: BoxFit.cover),
-                      ],
-                    ),
-                  ).expand(),
-                  Container(
-                    height: bottomWidgetHeight,
-                    color: Colors.white12,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        ListView(
-                          controller: scrollController,
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            BottomBarItemWidget(title: 'Eraser', icons: Icon(FontAwesomeIcons.eraser).icon, onTap: () => onEraserClick()),
-                            BottomBarItemWidget(title: 'Text', icons: Icon(Icons.text_fields_rounded).icon, onTap: () => onTextClick()),
-                            BottomBarItemWidget(title: 'Neon', icons: Icon(Icons.text_fields_rounded).icon, onTap: () => onNeonLightClick()),
-                            BottomBarItemWidget(title: 'Emoji', icons: Icon(FontAwesomeIcons.smile).icon, onTap: () => onEmojiClick()),
-                            BottomBarItemWidget(title: 'Stickers', icons: Icon(FontAwesomeIcons.smileWink).icon, onTap: () => onStickerClick()),
-
-                            /// Will be added in next update due to multiple finger bug
-                            //BottomBarItemWidget(title: 'Pen', icons: Icon(FontAwesomeIcons.penFancy).icon, onTap: () => onPenClick()),
-
-                            BottomBarItemWidget(title: 'Brightness', icons: Icon(Icons.brightness_2_outlined).icon, onTap: () => onBrightnessSliderClick()),
-                            BottomBarItemWidget(title: 'Contrast', icons: Icon(Icons.brightness_4_outlined).icon, onTap: () => onContrastSliderClick()),
-                            BottomBarItemWidget(title: 'Saturation', icons: Icon(Icons.brightness_4_sharp).icon, onTap: () => onSaturationSliderClick()),
-                            BottomBarItemWidget(title: 'Hue', icons: Icon(Icons.brightness_medium_sharp).icon, onTap: () => onHueSliderClick()),
-                            BottomBarItemWidget(title: 'Blur', icons: Icon(MaterialCommunityIcons.blur).icon, onTap: () => onBlurClick()),
-                            BottomBarItemWidget(title: 'Filter', icons: Icon(Icons.photo).icon, onTap: () => onFilterClick()),
-                            BottomBarItemWidget(title: 'Frame', icons: getBoolAsync(IS_FRAME_REWARDED) ? Icon(Icons.filter_frames).icon : Icon(Icons.lock_outline_rounded).icon, onTap: () => onFrameClick()),
+                            /// Show preview of edited image before save
+                            if (mShowBeforeImage)
+                              Image.file(croppedFile, fit: BoxFit.cover),
                           ],
                         ),
-                        Positioned(
-                          child: AnimatedCrossFade(
-                            firstChild: Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey),
-                            secondChild: Offstage(),
-                            crossFadeState: mIsMoreConfigWidgetVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                            duration: 700.milliseconds,
-                          ),
-                          right: 8,
+                      ).expand(),
+                      Container(
+                        height: bottomWidgetHeight,
+                        color: Colors.transparent,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            ListView(
+                              controller: scrollController,
+                              scrollDirection: Axis.horizontal,
+                              children: [
+                                // BottomBarItemWidget(
+                                //     title: 'Eraser',
+                                //     icons: Icon(FontAwesomeIcons.eraser).icon,
+                                //     onTap: () => onEraserClick()),
+                                // BottomBarItemWidget(
+                                //     title: 'Text',
+                                //     icons: Icon(Icons.text_fields_rounded).icon,
+                                //     onTap: () => onTextClick()),
+                                // BottomBarItemWidget(
+                                //     title: 'Neon',
+                                //     icons: Icon(Icons.text_fields_rounded).icon,
+                                //     onTap: () => onNeonLightClick()),
+                                // BottomBarItemWidget(
+                                //     title: 'Emoji',
+                                //     icons: Icon(FontAwesomeIcons.smile).icon,
+                                //     onTap: () => onEmojiClick()),
+                                // BottomBarItemWidget(
+                                //     title: 'Stickers',
+                                //     icons: Icon(FontAwesomeIcons.smileWink).icon,
+                                //     onTap: () => onStickerClick()),
+
+                                /// Will be added in next update due to multiple finger bug
+                                //BottomBarItemWidget(title: 'Pen', icons: Icon(FontAwesomeIcons.penFancy).icon, onTap: () => onPenClick()),
+
+                                BottomBarItemWidget(
+                                    title: '明るさ',
+                                    icons:
+                                        Icon(Icons.brightness_2_outlined).icon,
+                                    onTap: () => onBrightnessSliderClick()),
+                                BottomBarItemWidget(
+                                    title: 'コントラスト',
+                                    icons:
+                                        Icon(Icons.brightness_4_outlined).icon,
+                                    onTap: () => onContrastSliderClick()),
+                                BottomBarItemWidget(
+                                    title: '彩度',
+                                    icons: Icon(Icons.brightness_4_sharp).icon,
+                                    onTap: () => onSaturationSliderClick()),
+                                // BottomBarItemWidget(
+                                //     title: 'Hue',
+                                //     icons: Icon(Icons.brightness_medium_sharp).icon,
+                                //     onTap: () => onHueSliderClick()),
+                                // BottomBarItemWidget(
+                                //     title: 'Blur',
+                                //     icons: Icon(MaterialCommunityIcons.blur).icon,
+                                //     onTap: () => onBlurClick()),
+                                // BottomBarItemWidget(
+                                //     title: 'Filter',
+                                //     icons: Icon(Icons.photo).icon,
+                                //     onTap: () => onFilterClick()),
+                                // BottomBarItemWidget(
+                                //     title: 'Frame',
+                                //     icons: getBoolAsync(IS_FRAME_REWARDED)
+                                //         ? Icon(Icons.filter_frames).icon
+                                //         : Icon(Icons.lock_outline_rounded).icon,
+                                //     onTap: () => onFrameClick()),
+                              ],
+                            ),
+                            // Positioned(
+                            //   child: AnimatedCrossFade(
+                            //     firstChild: Icon(Icons.arrow_forward_ios_rounded,
+                            //         color: Colors.grey),
+                            //     secondChild: Offstage(),
+                            //     crossFadeState: mIsMoreConfigWidgetVisible
+                            //         ? CrossFadeState.showFirst
+                            //         : CrossFadeState.showSecond,
+                            //     duration: 700.milliseconds,
+                            //   ),
+                            //   right: 8,
+                            // ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                  Observer(
+                      builder: (_) => Loader().visible(appStore.isLoading)),
                 ],
               ),
-              Observer(builder: (_) => Loader().visible(appStore.isLoading)),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

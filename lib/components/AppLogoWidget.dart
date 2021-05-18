@@ -13,13 +13,11 @@ class AppLogoWidget extends StatelessWidget {
       width: context.width(),
       child: Column(
         children: [
-          Image.asset(
-            'images/humans.png',
-            width: context.width(),
-            height: 220,
-          ),
-          Text('Let\'s make your', style: boldTextStyle(size: 30)),
-          Text('Photo Better!', style: boldTextStyle(size: 30)).withShaderMaskGradient(LinearGradient(colors: [itemGradient1, itemGradient2]))
+          180.height,
+          // Text('写真を', style: boldTextStyle(size: 30)),
+          // Text('美しく作りましょう！', style: boldTextStyle(size: 30))
+          //     .withShaderMaskGradient(
+          //         LinearGradient(colors: [itemGradient1, itemGradient2]))
         ],
       ),
     );

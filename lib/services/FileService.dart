@@ -10,16 +10,19 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_editor_pro/utils/Colors.dart';
+import 'package:photo_editor_pro/utils/Constants.dart';
 
 Future<File> pickImage({ImageSource imageSource}) async {
-  PickedFile pickedFile = await ImagePicker().getImage(source: imageSource ?? ImageSource.gallery);
+  PickedFile pickedFile =
+      await ImagePicker().getImage(source: imageSource ?? ImageSource.gallery);
 
   if (pickedFile != null) {
     File file = File(pickedFile.path);
 
     return file;
   } else {
-    throw errorSomethingWentWrong;
+    // throw errorSomethingWentWrong;
+    return null;
   }
 }
 
@@ -77,11 +80,13 @@ Future<File> saveToDirectory(File file, {bool isFullPath = false}) async {
   }
 }
 
-Future<File> getCompressedFile(File file, String targetPath, {Function(int, int) onDone}) async {
+Future<File> getCompressedFile(File file, String targetPath,
+    {Function(int, int) onDone}) async {
   var status = await Permission.storage.request();
 
   if (status.isGranted) {
-    return await FlutterNativeImage.compressImage(file.path, quality: 70).then((v) async {
+    return await FlutterNativeImage.compressImage(file.path, quality: 70)
+        .then((v) async {
       if (v != null) {
         log(file.lengthSync());
         double originalFile = file.lengthSync().toDouble() / 1024.0;
@@ -109,7 +114,8 @@ Future<File> getCompressedFile(File file, String targetPath, {Function(int, int)
   }
 }
 
-Future<void> getResizeFile(File file, double sliderValue, {Function(int, int, int, int) onDone}) async {
+Future<void> getResizeFile(File file, double sliderValue,
+    {Function(int, int, int, int) onDone}) async {
   var status = await Permission.storage.request();
 
   if (status.isGranted) {
@@ -117,7 +123,8 @@ Future<void> getResizeFile(File file, double sliderValue, {Function(int, int, in
 
     if (sliderValue == 100) sliderValue = 99;
 
-    File compressedFile = await FlutterNativeImage.compressImage(file.path, quality: 70, percentage: 100 - sliderValue.toInt());
+    File compressedFile = await FlutterNativeImage.compressImage(file.path,
+        quality: 70, percentage: 100 - sliderValue.toInt());
 
     /*String fileName = currentTimeStamp().toString();
     String path = '$mAppDirectoryPath$fileName.png';
@@ -136,9 +143,11 @@ Future<void> getResizeFile(File file, double sliderValue, {Function(int, int, in
 
     double resizeKb = saved.lengthSync().toDouble() / 1024.0;
 
-    ImageProperties resizedProperties = await FlutterNativeImage.getImageProperties(saved.path);
+    ImageProperties resizedProperties =
+        await FlutterNativeImage.getImageProperties(saved.path);
 
-    onDone?.call(resizedProperties.height, resizedProperties.width, resizeKb.toInt(), fileOriginalKb.toInt());
+    onDone?.call(resizedProperties.height, resizedProperties.width,
+        resizeKb.toInt(), fileOriginalKb.toInt());
   }
 }
 
@@ -164,15 +173,15 @@ Future<void> cropImage(File imageFile, {Function(File) onDone}) async {
             CropAspectRatioPreset.ratio16x9
           ],
     androidUiSettings: AndroidUiSettings(
-      toolbarTitle: 'Crop Image',
-      toolbarColor: colorPrimary,
+      toolbarTitle: '写真クロップ',
+      toolbarColor: Blue,
       toolbarWidgetColor: Colors.white,
       initAspectRatio: CropAspectRatioPreset.original,
       lockAspectRatio: false,
-      activeControlsWidgetColor: colorPrimary,
+      activeControlsWidgetColor: Blue,
     ),
     iosUiSettings: IOSUiSettings(
-      title: 'Crop Image',
+      title: '写真クロップ',
     ),
   );
   if (croppedFile != null) {
@@ -191,11 +200,12 @@ Future<Uint8List> removeWhiteBackground(Uint8List bytes) async {
     var newPng = Img.encodePng(transparentImage);
     return newPng;
   } else {
-    throw 'Permission not granted';
+    throw '許可が与えられていません。';
   }
 }
 
-Future<Img.Image> colorTransparent(Img.Image src, int red, int green, int blue) async {
+Future<Img.Image> colorTransparent(
+    Img.Image src, int red, int green, int blue) async {
   var pixels = src.getBytes();
   for (int i = 0, len = pixels.length; i < len; i += 4) {
     if (pixels[i] == red && pixels[i + 1] == green && pixels[i + 2] == blue) {

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:photo_editor_pro/AppTheme.dart';
+import 'package:photo_editor_pro/screens/HomeScreen.dart';
 import 'package:photo_editor_pro/screens/SplashScreen.dart';
 import 'package:photo_editor_pro/store/AppStore.dart';
 import 'package:photo_editor_pro/utils/Constants.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: mAppName,
       theme: AppTheme.lightTheme,
-      home: SplashScreen(),
+      home: HomeScreen(),
     );
   }
 }

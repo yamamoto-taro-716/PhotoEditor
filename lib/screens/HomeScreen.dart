@@ -56,11 +56,15 @@ class HomeScreenState extends State<HomeScreen> {
     return SafeArea(
         child: Scaffold(
       body: Container(
-        // height: context.height(),
-        // width: context.width(),
+        height: context.height(),
+        width: context.width(),
         // decoration: BoxDecoration(
-        //     image: DecorationImage(
-        //         image: AssetImage('images/background.png'), fit: BoxFit.cover)),
+        //   image: DecorationImage(
+        //       colorFilter: ColorFilter.mode(
+        //           Colors.black.withOpacity(0.8), BlendMode.dstATop),
+        //       image: AssetImage('images/background.png'),
+        //       fit: BoxFit.cover),
+        // ),
         child: Stack(
           children: [
             SingleChildScrollView(

@@ -13,8 +13,8 @@ class HomeItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: context.width() / 2 - 50,
-      height: 150,
+      width: context.width() / 1 - 50,
+      height: 80,
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
         // color: Colors.grey.shade100,

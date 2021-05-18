@@ -14,7 +14,8 @@ class LastEditedPicturesWidget extends StatefulWidget {
   static String tag = '/LastEditedPicturesWidget';
 
   @override
-  _LastEditedPicturesWidgetState createState() => _LastEditedPicturesWidgetState();
+  _LastEditedPicturesWidgetState createState() =>
+      _LastEditedPicturesWidgetState();
 }
 
 class _LastEditedPicturesWidgetState extends State<LastEditedPicturesWidget> {
@@ -30,7 +31,7 @@ class _LastEditedPicturesWidgetState extends State<LastEditedPicturesWidget> {
     if (!disableAdMob) myInterstitial = buildInterstitialAd()..load();
 
     LiveStream().on('refresh', (v) {
-      setState(() { });
+      setState(() {});
     });
   }
 
@@ -70,7 +71,7 @@ class _LastEditedPicturesWidgetState extends State<LastEditedPicturesWidget> {
         future: getLocalSavedImageDirectories(),
         builder: (_, snap) {
           if (snap.hasData) {
-            if (snap.data.isEmpty) return SizedBox();
+            // if (snap.data.isEmpty) return SizedBox();
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,11 +79,20 @@ class _LastEditedPicturesWidgetState extends State<LastEditedPicturesWidget> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Last saved pictures', style: boldTextStyle()).paddingLeft(8),
+                    Text('最近保存された写真', style: boldTextStyle()).paddingLeft(8),
                     IconButton(
-                      icon: Icon(Icons.delete_outline_outlined),
+                      icon: Icon(
+                        Icons.delete_outline_outlined,
+                        size: 30,
+                        color: Red,
+                      ),
                       onPressed: () {
-                        showConfirmDialog(context, 'Do you want to delete all saved pictures?', buttonColor: colorPrimary).then((value) {
+                        if (snap.data.length == 0) return;
+                        showConfirmDialog(context, '保存した写真をすべて削除しますか？',
+                                buttonColor: Blue,
+                                positiveText: 'はい',
+                                negativeText: 'いいえ')
+                            .then((value) {
                           if (value ?? false) {
                             getFileSaveDirectory().then((value) async {
                               value.deleteSync(recursive: true);
@@ -91,7 +101,8 @@ class _LastEditedPicturesWidgetState extends State<LastEditedPicturesWidget> {
 
                               await 500.milliseconds.delay;
 
-                              if (myInterstitial != null && await myInterstitial.isLoaded()) {
+                              if (myInterstitial != null &&
+                                  await myInterstitial.isLoaded()) {
                                 myInterstitial.show().then((value) {
                                   myInterstitial?.dispose();
                                 });
@@ -110,7 +121,8 @@ class _LastEditedPicturesWidgetState extends State<LastEditedPicturesWidget> {
                     if (data.path.isImage) {
                       return Container(
                         padding: EdgeInsets.all(8),
-                        child: Image.file(File(data.path), width: context.width() * 0.21),
+                        child: Image.file(File(data.path),
+                            width: context.width() * 0.21),
                       ).onTap(() {
                         PhotoViewerWidget(data).launch(context).then((value) {
                           setState(() {});

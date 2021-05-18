@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:photo_editor_pro/screens/PhotoEditScreen.dart';
 import 'package:photo_editor_pro/utils/Colors.dart';
+import 'package:photo_editor_pro/utils/Constants.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:share/share.dart';
 
@@ -54,7 +55,8 @@ class _PhotoViewerWidgetState extends State<PhotoViewerWidget> {
             IconButton(
               icon: Icon(Icons.edit, color: Colors.white),
               onPressed: () {
-                PhotoEditScreen(file: File(widget.fileSystemEntity.path)).launch(context, isNewTask: true);
+                PhotoEditScreen(file: File(widget.fileSystemEntity.path))
+                    .launch(context, isNewTask: true);
               },
             ),
             IconButton(
@@ -66,7 +68,11 @@ class _PhotoViewerWidgetState extends State<PhotoViewerWidget> {
             IconButton(
               icon: Icon(Icons.delete, color: Colors.white),
               onPressed: () {
-                showConfirmDialog(context, 'Do you want to delete this picture?', buttonColor: colorPrimary).then((value) {
+                showConfirmDialog(context, 'この写真を削除しますか？',
+                        buttonColor: Blue,
+                        positiveText: 'はい',
+                        negativeText: 'いいえ')
+                    .then((value) {
                   if (value ?? false) {
                     File(widget.fileSystemEntity.path).deleteSync();
 
